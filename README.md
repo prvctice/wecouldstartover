@@ -2,6 +2,8 @@
 
 An interactive image gallery I made for one of my issues. It will display whatever images you throw in the folder you select in the index.html. A nice simple gallery for those that can use one. 
 
+[demo](https://wecouldstartover.com)
+
 ## Features
 
 - **Horizontal scroll gallery** - Smooth scrolling through images
@@ -28,7 +30,7 @@ Or simply host the files on any static web server.
 wecouldstartover/
 ├── index.html      # Main HTML with embedded JavaScript
 ├── styles.css      # Stylesheet
-├── web images/     # Image files (62 JPGs)
+├── web images/     # Image files
 ├── LICENSE         # MIT License
 └── README.md       # This file
 ```
@@ -40,6 +42,7 @@ Works in all modern browsers (Chrome, Firefox, Safari, Edge).
 ## Author
 
 [Tim Moore](https://timmoore.xyz)
+
 
 ## License
 
