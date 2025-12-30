@@ -24,7 +24,7 @@ body {
 
 .header-badge {
     font-size: 48px;
-    font-weight: 300;
+    font-weight: 400;
     color: #81C8B5;
     letter-spacing: 1px;
 }
@@ -74,7 +74,7 @@ body {
 @media (hover: hover) and (pointer: fine) {
     .image-wrapper {
         transform: perspective(800px) rotateX(0deg) rotateY(0deg) scale(1);
-        transition: transform 0.15s ease-out, box-shadow 0.3s ease-out;
+        transition: transform 0.25s ease-out, box-shadow 0.3s ease-out;
     }
 
     .image-wrapper:hover {
@@ -367,6 +367,10 @@ body.dark-mode .image-wrapper {
     background-color: #2a2a2a;
 }
 
+body.dark-mode .header-badge {
+    color: #378F27;
+}
+
 body.dark-mode .footer-title {
     font-size: 24px;
     font-weight: 400;
@@ -376,7 +380,7 @@ body.dark-mode .footer-title {
 
 body.dark-mode .issue-badge {
     font-size: 36px;
-    font-weight: 300;
+    font-weight: 400;
     color: #378F27;
     letter-spacing: 1px;
 }
@@ -458,10 +462,15 @@ body.grid-mode .image-wrapper img {
     color: rgba(255,255,255,0.6);
 }
 
+
 .footer-links a {
     color: rgba(255,255,255,0.6);
     text-decoration: none;
     transition: color 0.2s;
+}
+
+.download a {
+    color: #378F27 !important;
 }
 
 .footer-links a:hover {
@@ -477,7 +486,7 @@ body.grid-mode .image-wrapper img {
 
 .issue-badge {
     font-size: 36px;
-    font-weight: 300;
+    font-weight: 400;
     color: #81C8B5;
     letter-spacing: 1px;
 }
@@ -586,4 +595,17 @@ body.grid-mode .image-wrapper img {
         right: auto;
         left: 98px;
     }
+    body.dark-mode .footer-title {
+    font-size: 24px;
+    font-weight: 400;
+    color: #378F27;
+    letter-spacing: 0.5px;
+}
+
+body.dark-mode .issue-badge {
+    font-size: 36px;
+    font-weight: 400;
+    color: #378F27;
+    letter-spacing: 1px;
+}
 }
