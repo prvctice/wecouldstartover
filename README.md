@@ -1,6 +1,6 @@
-# We Could Start Over - Out 1
+# Out1 Magazine: We Could Start Over
 
-An interactive image gallery for viewing the 62-image photography collection "We Could Start Over - Out 1" by Tim Moore.
+An interactive image gallery I made for one of my issues. It will display whatever images you throw in the folder you select in the index.html. A nice simple gallery for those that can use one. 
 
 ## Features
 
@@ -12,7 +12,6 @@ An interactive image gallery for viewing the 62-image photography collection "We
 - **World clock** - Shows current time in multiple cities
 - **Lazy loading** - Images load efficiently as you scroll
 - **Mobile responsive** - Optimized for all screen sizes
-- **Apple TV-style hover effect** - 3D tilt effect on desktop
 
 ## Usage
 
