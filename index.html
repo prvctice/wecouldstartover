@@ -22,6 +22,18 @@
             color: white;
         }
 
+        /* Header - hidden on desktop, visible on mobile */
+        .header {
+            display: none;
+        }
+
+        .header-badge {
+            font-size: 48px;
+            font-weight: 300;
+            color: #81C8B5;
+            letter-spacing: 1px;
+        }
+
         .gallery-container {
             height: calc(100vh - 150px);
             overflow-x: auto;
@@ -155,76 +167,75 @@
 
         /* Mobile styles */
         @media (max-width: 768px) {
+            .header {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                padding: 30px 20px;
+                height: 120px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                background-color: #7A7971;
+                z-index: 10;
+            }
+
             .gallery-container {
-                height: calc(100vh - 90px);
+                height: calc(100vh - 120px - 120px);
+                margin-top: 120px;
+                margin-bottom: 120px;
             }
 
             .gallery {
-                padding: 15px;
+                padding: 0 20px;
                 gap: 15px;
             }
 
             .image-wrapper {
-                height: calc(100% - 30px);
+                height: 100%;
             }
 
             .footer {
-                height: 80px;
+                height: 120px;
                 flex-direction: column;
                 justify-content: center;
+                align-items: flex-start;
                 gap: 8px;
-                padding: 10px 20px;
-                position:fixed;
-                bottom:0;
-                right:0;
-                left:0;
+                padding: 20px;
+                position: fixed;
+                bottom: 0;
+                right: 0;
+                left: 0;
             }
 
             .footer-left {
                 flex-direction: column;
-                align-items: center;
-                gap: 5px;
-                position:fixed;
-                left:0;
+                align-items: flex-start;
+                gap: 8px;
+                position: static;
             }
 
             .footer-title {
-                font-size: 16px;
+                font-size: 24px;
             }
 
             .footer-links {
-                gap: 15px;
+                gap: 20px;
+                font-size: 12px;
             }
 
             .footer-right {
-                position: absolute;
-                top: 15px;
-                right: 15px;
-                 position:fixed;
-                bottom:0;
-                right:0;
-              
-            }
-
-            .issue-badge {
-                font-size: 24px;
-            }
-        }
-
-        /* Very small mobile */
-        @media (max-width: 480px) {
-            .gallery {
-                padding: 10px;
-                gap: 10px;
-            }
-
-            .image-wrapper {
-                height: calc(100% - 20px);
+                display: none;
             }
         }
     </style>
 </head>
 <body>
+    <header class="header">
+        <span class="header-badge">Out 1</span>
+    </header>
+
     <div class="gallery-container" id="galleryContainer">
         <div class="gallery" id="gallery">
             <!-- Images will be dynamically inserted here -->
