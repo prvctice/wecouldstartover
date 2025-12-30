@@ -208,6 +208,90 @@
             font-size: 14px;
         }
 
+        /* Grid Toggle Button */
+        .view-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 28px;
+            height: 28px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .view-toggle:hover {
+            opacity: 0.7;
+        }
+
+        .view-toggle-icon {
+            display: grid;
+            grid-template-columns: repeat(3, 4px);
+            gap: 2px;
+        }
+
+        .view-toggle-icon span {
+            width: 4px;
+            height: 4px;
+            background-color: white;
+            border-radius: 1px;
+            opacity: 0.8;
+        }
+
+        /* Scroll icon (shown in grid mode) */
+        .view-toggle.grid-active .view-toggle-icon {
+            display: flex;
+            gap: 2px;
+        }
+
+        .view-toggle.grid-active .view-toggle-icon span {
+            width: 3px;
+            height: 12px;
+            border-radius: 1px;
+        }
+
+        /* Grid View Styles */
+        body.grid-mode {
+            overflow: auto;
+        }
+
+        body.grid-mode .gallery-container {
+            display: block;
+            height: auto;
+            overflow: visible;
+            padding-bottom: 100px;
+        }
+
+        body.grid-mode .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 20px;
+            height: auto;
+        }
+
+        body.grid-mode .image-wrapper {
+            flex: 0 0 calc(14.285% - 7px);
+            height: 0;
+            padding-bottom: calc((14.285% - 7px) * 4 / 3);
+            position: relative;
+            aspect-ratio: unset;
+        }
+
+        body.grid-mode .image-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .image-wrapper.loading::after {
             content: '';
             position: absolute;
@@ -351,10 +435,36 @@
             .footer-right {
                 display: none;
             }
+
+            .view-toggle {
+                top: 46px;
+                bottom: auto;
+                left: 20px;
+                right: auto;
+            }
+
+            body.grid-mode .gallery-container {
+                margin-top: 120px;
+                padding-bottom: 130px;
+            }
+
+            body.grid-mode .image-wrapper {
+                flex: 0 0 calc(25% - 6px);
+                padding-bottom: calc((25% - 6px) * 4 / 3);
+            }
         }
     </style>
 </head>
 <body>
+    <!-- View Toggle Button -->
+    <button class="view-toggle" id="viewToggle" aria-label="Toggle grid view">
+        <div class="view-toggle-icon">
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+        </div>
+    </button>
+
     <header class="header">
         <span class="header-badge">Out 1</span>
     </header>
@@ -476,6 +586,9 @@
 
         // Update which images are loaded based on scroll position
         function updateLoadedImages() {
+            // Don't unload images in grid mode
+            if (isGridView) return;
+
             const currentIndex = getVisibleIndex();
 
             // Load images around current position
@@ -530,6 +643,29 @@
             openLightbox(newIndex);
         }
 
+        // Grid view functionality
+        let isGridView = false;
+
+        function toggleGridView() {
+            const toggle = document.getElementById('viewToggle');
+
+            isGridView = !isGridView;
+
+            if (isGridView) {
+                document.body.classList.add('grid-mode');
+                toggle.classList.add('grid-active');
+                // Load all images in grid view
+                for (let i = 1; i <= TOTAL_IMAGES; i++) {
+                    loadImage(i);
+                }
+            } else {
+                document.body.classList.remove('grid-mode');
+                toggle.classList.remove('grid-active');
+                // Reset to lazy loading
+                updateLoadedImages();
+            }
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             initGallery();
@@ -563,8 +699,9 @@
                 }
             });
 
-            // Touch/mouse wheel horizontal scroll enhancement
+            // Touch/mouse wheel horizontal scroll enhancement (only in scroll mode)
             container.addEventListener('wheel', (e) => {
+                if (isGridView) return; // Let normal scrolling work in grid mode
                 if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
                     e.preventDefault();
                     container.scrollLeft += e.deltaY;
@@ -583,6 +720,9 @@
             document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
             document.getElementById('lightboxPrev').addEventListener('click', () => navigateLightbox(-1));
             document.getElementById('lightboxNext').addEventListener('click', () => navigateLightbox(1));
+
+            // Grid toggle
+            document.getElementById('viewToggle').addEventListener('click', toggleGridView);
 
             // Close on background click
             lightbox.addEventListener('click', (e) => {
