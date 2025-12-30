@@ -65,7 +65,22 @@ body {
     background-color: #3a3a3a;
     overflow: hidden;
     cursor: pointer;
-    transition: background-color 0.4s ease;
+    transition: background-color 0.4s ease, transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+/* Desktop hover effect - Apple TV style */
+@media (hover: hover) and (pointer: fine) {
+    .image-wrapper {
+        transform: perspective(800px) rotateX(0deg) rotateY(0deg) scale(1);
+        transition: transform 0.15s ease-out, box-shadow 0.3s ease-out;
+    }
+
+    .image-wrapper:hover {
+        z-index: 10;
+        box-shadow: 0 14px 28px rgba(0,0,0,0.2);
+    }
 }
 
 .image-wrapper img {
@@ -107,7 +122,7 @@ body {
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.95);
-    z-index: 1000;
+    z-index: 10000;
     justify-content: center;
     align-items: center;
     opacity: 0;
@@ -385,6 +400,7 @@ body.grid-mode .image-wrapper img {
     bottom: 0;
     right: 0;
     left: 0;
+    z-index: 100;
     transition: background-color 0.4s ease;
 }
 
@@ -477,6 +493,7 @@ body.grid-mode .image-wrapper img {
         bottom: 0;
         right: 0;
         left: 0;
+        z-index:9999;
     }
 
     .footer-left {

@@ -6,7 +6,7 @@
     <title>We Could Start Over - Out 1</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="dark-mode">
     <!-- View Toggle Button -->
     <button class="view-toggle" id="viewToggle" aria-label="Toggle grid view">
         <div class="view-toggle-icon">
@@ -18,8 +18,8 @@
 
     <!-- Theme Toggle -->
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-        <span class="theme-circle light active"></span>
-        <span class="theme-circle dark"></span>
+        <span class="theme-circle light"></span>
+        <span class="theme-circle dark active"></span>
     </button>
 
     <header class="header">
@@ -315,6 +315,45 @@
                     navigateLightbox(1);
                 }
             });
+
+            // Apple TV-style hover tilt effect (desktop only)
+            if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+                const gallery = document.getElementById('gallery');
+
+                gallery.addEventListener('mousemove', (e) => {
+                    const wrapper = e.target.closest('.image-wrapper');
+                    if (!wrapper) return;
+
+                    const rect = wrapper.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    // Calculate position as percentage (-0.5 to 0.5)
+                    const xPercent = (x / rect.width) - 0.5;
+                    const yPercent = (y / rect.height) - 0.5;
+
+                    // Subtle rotation (max ~2 degrees)
+                    const rotateY = xPercent * 4;
+                    const rotateX = yPercent * -4;
+
+                    wrapper.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
+                });
+
+                gallery.addEventListener('mouseleave', () => {
+                    const wrappers = document.querySelectorAll('.image-wrapper');
+                    wrappers.forEach(w => w.style.transform = '');
+                });
+
+                // Reset individual wrapper on mouse leave
+                gallery.addEventListener('mouseout', (e) => {
+                    const wrapper = e.target.closest('.image-wrapper');
+                    const relatedWrapper = e.relatedTarget?.closest('.image-wrapper');
+
+                    if (wrapper && wrapper !== relatedWrapper) {
+                        wrapper.style.transform = '';
+                    }
+                });
+            }
         });
     </script>
 </body>
