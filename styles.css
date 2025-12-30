@@ -276,17 +276,15 @@ body {
 /* Back to Start Button */
 .back-to-start {
     position: fixed;
-    top: 20px;
+    top: 27px;
     right: 100px;
-    width: 28px;
-    height: 28px;
     background: none;
     border: none;
     cursor: pointer;
     z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-family: inherit;
+    font-size: 11px;
+    color: white;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -299,11 +297,6 @@ body {
 
 .back-to-start:hover {
     opacity: 1;
-}
-
-.back-to-start .material-icons {
-    font-size: 20px;
-    color: white;
 }
 
 /* Hide back button in grid mode */
@@ -589,7 +582,7 @@ body.grid-mode .image-wrapper img {
     }
 
     .back-to-start {
-        top: 46px;
+        top: 54px;
         right: auto;
         left: 98px;
     }
