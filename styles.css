@@ -35,7 +35,6 @@ body {
     overflow-x: auto;
     overflow-y: hidden;
     display: flex;
-    scroll-behavior: smooth;
     scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;
@@ -277,7 +276,7 @@ body {
 .back-to-start {
     position: fixed;
     top: 27px;
-    right: 100px;
+    right: 140px;
     background: none;
     border: none;
     cursor: pointer;
@@ -301,6 +300,40 @@ body {
 
 /* Hide back button in grid mode */
 body.grid-mode .back-to-start {
+    display: none;
+}
+
+/* Auto Scroll Toggle */
+.auto-scroll-toggle {
+    position: fixed;
+    top: 27px;
+    right: 100px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 100;
+    font-family: inherit;
+    font-size: 11px;
+    color: white;
+    opacity: 0.5;
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.auto-scroll-toggle:hover {
+    opacity: 0.8;
+}
+
+.auto-scroll-toggle.active {
+    opacity: 1;
+    color: #81C8B5;
+}
+
+body.dark-mode .auto-scroll-toggle.active {
+    color: #378F27;
+}
+
+/* Hide auto scroll in grid mode */
+body.grid-mode .auto-scroll-toggle {
     display: none;
 }
 
@@ -703,10 +736,16 @@ body.dark-mode a.credit:hover {
         padding-bottom: calc((25% - 6px) * 4 / 3);
     }
 
-    .back-to-start {
+    .auto-scroll-toggle {
         top: 54px;
         right: auto;
         left: 98px;
+    }
+
+    .back-to-start {
+        top: 54px;
+        right: auto;
+        left: 135px;
     }
     body.dark-mode .footer-title {
     font-size: 24px;

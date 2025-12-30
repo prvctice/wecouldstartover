@@ -25,6 +25,9 @@
     <!-- Back to Start Button -->
     <button class="back-to-start" id="backToStart" aria-label="Back to start">Start over</button>
 
+    <!-- Auto Scroll Toggle -->
+    <button class="auto-scroll-toggle" id="autoScrollToggle" aria-label="Toggle auto scroll">Auto</button>
+
     <header class="header">
         <span class="header-badge">Out 1</span>
     </header>
@@ -264,6 +267,7 @@
 
             // Back to start click handler
             backToStart.addEventListener('click', () => {
+                stopAutoScroll();
                 container.scrollTo({ left: 0, behavior: 'smooth' });
             });
 
@@ -461,6 +465,70 @@
             issueBadge.addEventListener('click', toggleClock);
             clockNext.addEventListener('click', nextCity);
             clockPrev.addEventListener('click', prevCity);
+
+            // Auto Scroll functionality
+            let isAutoScrolling = false;
+            let autoScrollInterval = null;
+            const AUTO_SCROLL_SPEED = 2; // pixels per tick
+            const AUTO_SCROLL_INTERVAL = 20; // ms between ticks
+            const autoScrollToggle = document.getElementById('autoScrollToggle');
+
+            function startAutoScroll() {
+                if (isGridView || isAutoScrolling) return;
+                isAutoScrolling = true;
+                autoScrollToggle.classList.add('active');
+
+                // Disable scroll-snap during auto-scroll
+                container.style.scrollSnapType = 'none';
+
+                autoScrollInterval = setInterval(() => {
+                    const maxScroll = container.scrollWidth - container.clientWidth;
+
+                    if (container.scrollLeft >= maxScroll - 5) {
+                        container.scrollLeft = 0;
+                    } else {
+                        container.scrollLeft = container.scrollLeft + AUTO_SCROLL_SPEED;
+                    }
+                }, AUTO_SCROLL_INTERVAL);
+            }
+
+            function stopAutoScroll() {
+                isAutoScrolling = false;
+                autoScrollToggle.classList.remove('active');
+                if (autoScrollInterval) {
+                    clearInterval(autoScrollInterval);
+                    autoScrollInterval = null;
+                }
+                // Re-enable scroll-snap
+                container.style.scrollSnapType = 'x proximity';
+            }
+
+            function toggleAutoScroll() {
+                if (isGridView) return;
+                if (isAutoScrolling) {
+                    stopAutoScroll();
+                } else {
+                    startAutoScroll();
+                }
+            }
+
+            autoScrollToggle.addEventListener('click', toggleAutoScroll);
+
+            // Pause auto scroll on user interaction
+            container.addEventListener('mousedown', stopAutoScroll);
+            container.addEventListener('touchstart', stopAutoScroll);
+            container.addEventListener('wheel', () => {
+                if (isAutoScrolling) stopAutoScroll();
+            }, { passive: true });
+
+            // Stop auto scroll when entering grid mode
+            const originalToggleGridView = toggleGridView;
+            toggleGridView = function() {
+                stopAutoScroll();
+                originalToggleGridView();
+            };
+            document.getElementById('viewToggle').removeEventListener('click', originalToggleGridView);
+            document.getElementById('viewToggle').addEventListener('click', toggleGridView);
         });
     </script>
 </body>
