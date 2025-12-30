@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>We Could Start Over - Out 1</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body class="dark-mode">
     <!-- View Toggle Button -->
@@ -20,6 +21,11 @@
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
         <span class="theme-circle light"></span>
         <span class="theme-circle dark active"></span>
+    </button>
+
+    <!-- Back to Start Button -->
+    <button class="back-to-start" id="backToStart" aria-label="Back to start">
+        <span class="material-icons">refresh</span>
     </button>
 
     <header class="header">
@@ -205,12 +211,14 @@
 
         function toggleGridView() {
             const toggle = document.getElementById('viewToggle');
+            const backBtn = document.getElementById('backToStart');
 
             isGridView = !isGridView;
 
             if (isGridView) {
                 document.body.classList.add('grid-mode');
                 toggle.classList.add('grid-active');
+                backBtn.classList.remove('visible');
                 // Load all images in grid view
                 for (let i = 1; i <= TOTAL_IMAGES; i++) {
                     loadImage(i);
@@ -233,6 +241,26 @@
             // Handle scroll
             const container = document.getElementById('galleryContainer');
             container.addEventListener('scroll', throttle(updateLoadedImages, 100));
+
+            // Back to start button visibility
+            const backToStart = document.getElementById('backToStart');
+            const SCROLL_THRESHOLD = 200;
+
+            function updateBackButtonVisibility() {
+                if (isGridView) return;
+                if (container.scrollLeft > SCROLL_THRESHOLD) {
+                    backToStart.classList.add('visible');
+                } else {
+                    backToStart.classList.remove('visible');
+                }
+            }
+
+            container.addEventListener('scroll', throttle(updateBackButtonVisibility, 100));
+
+            // Back to start click handler
+            backToStart.addEventListener('click', () => {
+                container.scrollTo({ left: 0, behavior: 'smooth' });
+            });
 
             // Handle resize
             window.addEventListener('resize', throttle(updateLoadedImages, 200));
