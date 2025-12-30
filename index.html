@@ -39,7 +39,7 @@
         <div class="footer-left">
             <span class="footer-title">We Could Start Over</span>
             <div class="footer-links">
-                 <a href="https://timmoore.xyz" target="_blank">By Tim Moore, 2025</a>
+                 <a class="credit" href="https://timmoore.xyz" target="_blank">By Tim Moore, 2025</a>
                 <a class="download" href="https://drive.google.com/drive/folders/1UkzxeAqmP_IUxoQNtaTU5_7jmgrGttrt?usp=sharing" target="_blank">Download</a>
             </div>
         </div>
@@ -54,7 +54,6 @@
         <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous"></button>
         <img class="lightbox-content" id="lightboxImage" src="" alt="">
         <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next"></button>
-        <div class="lightbox-counter" id="lightboxCounter"></div>
     </div>
 
     <script>
@@ -180,13 +179,11 @@
         let currentLightboxIndex = 1;
         const lightbox = document.getElementById('lightbox');
         const lightboxImage = document.getElementById('lightboxImage');
-        const lightboxCounter = document.getElementById('lightboxCounter');
 
         function openLightbox(index) {
             currentLightboxIndex = index;
             const imageSrc = `${IMAGE_PATH}${String(index).padStart(2, '0')}.jpg`;
             lightboxImage.src = imageSrc;
-            lightboxCounter.textContent = `${index} / ${TOTAL_IMAGES}`;
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
