@@ -44,7 +44,17 @@
             </div>
         </div>
         <div class="footer-right">
-            <span class="issue-badge">Out 1</span>
+            <div class="world-clock-container">
+                <span class="issue-badge" id="issueBadge">Out 1</span>
+                <div class="world-clock" id="worldClock">
+                    <div class="clock-time" id="clockTime">12:00 PM</div>
+                    <div class="clock-city-row">
+                        <button class="clock-arrow clock-prev" id="clockPrev" aria-label="Previous city">←</button>
+                        <span class="clock-city" id="clockCity">New York</span>
+                        <button class="clock-arrow clock-next" id="clockNext" aria-label="Next city">→</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
 
@@ -376,6 +386,80 @@
                     }
                 });
             }
+
+            // World Clock functionality
+            const cities = [
+                { name: 'New York', timezone: 'America/New_York' },
+                { name: 'Hong Kong', timezone: 'Asia/Hong_Kong' },
+                { name: 'Paris', timezone: 'Europe/Paris' },
+                { name: 'Tokyo', timezone: 'Asia/Tokyo' },
+                { name: 'Taipei City', timezone: 'Asia/Taipei' },
+                { name: 'Berlin', timezone: 'Europe/Berlin' },
+                { name: 'Beijing', timezone: 'Asia/Shanghai' }
+            ];
+
+            let currentCityIndex = 0;
+            let clockInterval = null;
+            const issueBadge = document.getElementById('issueBadge');
+            const worldClock = document.getElementById('worldClock');
+            const clockTime = document.getElementById('clockTime');
+            const clockCity = document.getElementById('clockCity');
+            const clockPrev = document.getElementById('clockPrev');
+            const clockNext = document.getElementById('clockNext');
+
+            function formatTime(date, timezone) {
+                return date.toLocaleTimeString('en-US', {
+                    timeZone: timezone,
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                });
+            }
+
+            function updateClock() {
+                const now = new Date();
+                const city = cities[currentCityIndex];
+                clockTime.textContent = formatTime(now, city.timezone);
+                clockCity.textContent = city.name;
+            }
+
+            function showClock() {
+                worldClock.classList.add('active');
+                issueBadge.classList.add('active');
+                updateClock();
+                clockInterval = setInterval(updateClock, 1000);
+            }
+
+            function hideClock() {
+                worldClock.classList.remove('active');
+                issueBadge.classList.remove('active');
+                if (clockInterval) {
+                    clearInterval(clockInterval);
+                    clockInterval = null;
+                }
+            }
+
+            function toggleClock() {
+                if (worldClock.classList.contains('active')) {
+                    hideClock();
+                } else {
+                    showClock();
+                }
+            }
+
+            function nextCity() {
+                currentCityIndex = (currentCityIndex + 1) % cities.length;
+                updateClock();
+            }
+
+            function prevCity() {
+                currentCityIndex = (currentCityIndex - 1 + cities.length) % cities.length;
+                updateClock();
+            }
+
+            issueBadge.addEventListener('click', toggleClock);
+            clockNext.addEventListener('click', nextCity);
+            clockPrev.addEventListener('click', prevCity);
         });
     </script>
 </body>

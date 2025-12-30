@@ -383,6 +383,94 @@ body.dark-mode .issue-badge {
     font-weight: 400;
     color: #378F27;
     letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+body.dark-mode .issue-badge:hover,
+body.dark-mode .issue-badge.active {
+    color: rgb(151 11 59);
+}
+
+/* World Clock Styles */
+.world-clock-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.issue-badge {
+    cursor: pointer;
+}
+
+.world-clock {
+    position: absolute;
+    right: calc(100% + 20px);
+    top: 50%;
+    transform: translateY(-45%);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+}
+
+.world-clock.active {
+    display: flex;
+    opacity: 1;
+}
+
+.clock-time {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    color: rgb(151 11 59);
+    line-height: 1;
+}
+
+.clock-city-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 1px;
+}
+
+.clock-city {
+    font-size: 9px;
+    font-weight: 400;
+    color: #87A39E;
+    min-width: 50px;
+    text-align: center;
+}
+
+.clock-arrow {
+    background: none;
+    border: none;
+    color: #87A39E;
+    font-size: 9px;
+    cursor: pointer;
+    padding: 1px 3px;
+    transition: color 0.3s ease;
+}
+
+.clock-arrow:hover {
+    color: rgb(151 11 59);
+}
+
+/* Dark mode world clock */
+body.dark-mode .clock-time {
+    color: rgb(151 11 59);
+}
+
+body.dark-mode .clock-city {
+    color: #87A39E;
+}
+
+body.dark-mode .clock-arrow {
+    color: #87A39E;
+}
+
+body.dark-mode .clock-arrow:hover {
+    color: rgb(151 11 59);
 }
 
 /* Grid View Styles */
@@ -460,6 +548,7 @@ body.grid-mode .image-wrapper img {
     gap: 20px;
     font-size: 11px;
     color: rgba(255,255,255,0.6);
+    padding-left: 4px;
 }
 
 
