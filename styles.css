@@ -397,15 +397,11 @@ body.dark-mode .issue-badge.active {
     align-items: center;
 }
 
-.issue-badge {
-    cursor: pointer;
-}
-
 .world-clock {
     position: absolute;
     right: calc(100% + 20px);
-    top: 50%;
-    transform: translateY(-45%);
+    top: 55%;
+    transform: translateY(-50%);
     display: none;
     flex-direction: column;
     align-items: center;
@@ -437,39 +433,43 @@ body.dark-mode .issue-badge.active {
 .clock-city {
     font-size: 9px;
     font-weight: 400;
-    color: #87A39E;
+    color: rgb(151 11 59);
     min-width: 50px;
     text-align: center;
+    transition: color 0.3s ease;
 }
 
 .clock-arrow {
     background: none;
     border: none;
-    color: #87A39E;
+    color: rgb(151 11 59);
     font-size: 9px;
     cursor: pointer;
     padding: 1px 3px;
     transition: color 0.3s ease;
 }
 
-.clock-arrow:hover {
-    color: rgb(151 11 59);
+/* Light mode world clock */
+.issue-badge {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.issue-badge:hover,
+.issue-badge.active {
+    color: #225a0c;
+}
+
+.clock-time,
+.clock-city,
+.clock-arrow {
+    color: #225a0c;
 }
 
 /* Dark mode world clock */
-body.dark-mode .clock-time {
-    color: rgb(151 11 59);
-}
-
-body.dark-mode .clock-city {
-    color: #87A39E;
-}
-
+body.dark-mode .clock-time,
+body.dark-mode .clock-city,
 body.dark-mode .clock-arrow {
-    color: #87A39E;
-}
-
-body.dark-mode .clock-arrow:hover {
     color: rgb(151 11 59);
 }
 
