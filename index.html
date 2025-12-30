@@ -208,6 +208,80 @@
             font-size: 14px;
         }
 
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 60px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 100;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .theme-toggle:hover {
+            opacity: 0.7;
+        }
+
+        .theme-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255,255,255,0.4);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .theme-circle.light {
+            background-color: #7A7971;
+        }
+
+        .theme-circle.dark {
+            background-color: #1a1a1a;
+        }
+
+        .theme-circle.active {
+            transform: scale(1.2);
+            border-color: white;
+        }
+
+        /* Dark Mode */
+        body {
+            transition: background-color 0.4s ease;
+        }
+
+        body.dark-mode {
+            background-color: #1a1a1a;
+        }
+
+        .footer {
+            transition: background-color 0.4s ease;
+        }
+
+        body.dark-mode .footer {
+            background-color: #1a1a1a;
+        }
+
+        .header {
+            transition: background-color 0.4s ease;
+        }
+
+        body.dark-mode .header {
+            background-color: #1a1a1a;
+        }
+
+        .image-wrapper {
+            transition: background-color 0.4s ease;
+        }
+
+        body.dark-mode .image-wrapper {
+            background-color: #2a2a2a;
+        }
+
         /* Grid Toggle Button */
         .view-toggle {
             position: fixed;
@@ -443,6 +517,13 @@
                 right: auto;
             }
 
+            .theme-toggle {
+                top: 46px;
+                right: auto;
+                left: 58px;
+                height: 28px;
+            }
+
             body.grid-mode .gallery-container {
                 margin-top: 120px;
                 padding-bottom: 130px;
@@ -463,6 +544,12 @@
             <span></span><span></span><span></span>
             <span></span><span></span><span></span>
         </div>
+    </button>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <span class="theme-circle light active"></span>
+        <span class="theme-circle dark"></span>
     </button>
 
     <header class="header">
@@ -723,6 +810,21 @@
 
             // Grid toggle
             document.getElementById('viewToggle').addEventListener('click', toggleGridView);
+
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', () => {
+                const isDark = document.body.classList.toggle('dark-mode');
+                const lightCircle = document.querySelector('.theme-circle.light');
+                const darkCircle = document.querySelector('.theme-circle.dark');
+
+                if (isDark) {
+                    lightCircle.classList.remove('active');
+                    darkCircle.classList.add('active');
+                } else {
+                    darkCircle.classList.remove('active');
+                    lightCircle.classList.add('active');
+                }
+            });
 
             // Close on background click
             lightbox.addEventListener('click', (e) => {
